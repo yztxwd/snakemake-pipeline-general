@@ -1,0 +1,70 @@
+# path or URL to sample sheet (TSV format, columns: sample, condition, ...)
+samples: samples.tsv
+# path or URL to sequencing unit sheet (TSV format, columns: sample, unit, fq1, fq2, strandedness).
+# Units are techinical replicates (e.g. lanes, or resequencing of the same biological sample). If the 
+# column "strandedness" is present (optional), value can be empty or has one of these values: none, yes
+# or reverse.
+
+aligner: "bowtie2" # bowtie2 or bwa
+skiptrim: false
+trimmer: "trimmomatic" # trimmomatic or fastp
+
+# specify the resources available for computational heavy rules, including: trimmomatic, samtools, bowtie2, bwa, deeptools...
+threads: 20
+mem: 20
+
+multiqc:
+  params: ""
+
+trimmomatic:
+  # the trimming parameter, see manual: http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf
+  trimmer: "LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:15"
+  pe_adapter: "data/TruSeq3-PE.fa"
+  se_adapter: "data/TruSeq3-SE.fa"
+  adapter_trimmer: ":2:30:10"
+
+fastp:
+  # manual: https://github.com/OpenGene/fastp
+  pe_adapter: "data/TruSeq3-PE.fa"
+  se_adapter: "data/TruSeq3-SE.fa"
+  extra: "-g"
+
+bowtie2:
+  # bowtie2 index
+  index: "path/to/bowtie2/index"
+  # extra parameters, see manual: http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
+  extra: ""
+
+# bwa-mem
+bwa:
+  # bwa index
+  index: "path/to/bwa/index"
+  # extra parameters, see manual: http://bio-bwa.sourceforge.net/bwa.shtml
+  extra: ""
+
+mark_duplicates: ""
+
+samtools_view:
+  # flag used to filter reads, remove inproperly paired reads or duplicates
+  # user can adjust flag to fit different requirements
+  pe: "-F 3852 -b" # Remove duplicates and supplementary alignment
+  se: "-F 2820 -b" # Won't remove duplicates and supplementary alignment
+
+# filter pair-end reads by 1. -t: Both reads > cetern MAPQ; 2. -f: fragment size < threshold 3. two reads must be on the same chromosome
+# this is skipped by default, enable when in need
+# CAUTION: Don't specify MAPQ threshold > 0 when using BWA since BWA doesn't output meaningful MAPQ!!!
+filter:
+  skip: true
+  # parameters
+  pe: "-m pair -f 0 -t 10"
+  se: "-m single -f 0 -t 10"
+
+genomecov: "-bg -pc"
+
+bedGraphToBigWig:
+  chrom: "data/Mus_musculus.GRCm38.dna.merge.fa.fai"
+  params: ""
+
+bamCoverage: ""
+
+bamCompare: "--scaleFactorsMethod SES -bl data/mm10-blacklist.v2.bed"

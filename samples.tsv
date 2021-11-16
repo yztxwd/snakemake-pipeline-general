@@ -1,0 +1,6 @@
+sample	condition	rep	unit	fq1	fq2
+A	treatment	rep1	lane1	A.1.fastq.gz	A.2.fastq.gz
+A	treatment	rep1	lane2	A.2.fastq.gz
+A	treatment	rep2	lane1	A.3.fastq.gz
+B	control	rep1	tech1	B.1.fastq.gz	B.2.fastq.gz
+B	control	rep2	tech2	B.1.fastq.gz	B.2.fastq.gz
