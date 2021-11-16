@@ -1,3 +1,4 @@
+#### snakemake-pipeline-general >>>####
 # path or URL to sample sheet (TSV format, columns: sample, condition, ...)
 samples: samples.tsv
 # path or URL to sequencing unit sheet (TSV format, columns: sample, unit, fq1, fq2, strandedness).
@@ -68,3 +69,4 @@ bedGraphToBigWig:
 bamCoverage: ""
 
 bamCompare: "--scaleFactorsMethod SES -bl data/mm10-blacklist.v2.bed"
+####<<<< snakemake-pipeline-general ####
