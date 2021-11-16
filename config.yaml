@@ -11,6 +11,7 @@ skiptrim: false
 trimmer: "trimmomatic" # trimmomatic or fastp
 
 # specify the resources available for computational heavy rules, including: trimmomatic, samtools, bowtie2, bwa, deeptools...
+nodes: 1
 threads: 20
 mem: 20
 
