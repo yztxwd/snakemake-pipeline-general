@@ -1,6 +1,13 @@
+def find_fastqc_input(wildcards):
+    global samples
+    fqs = samples[["fq1", "fq2"]].values.flatten()
+    fqs = list(fqs[~pd.isnull(fqs)])
+    inputs = ["data/" + i for i in fqs if wildcards.sample in i]
+    return inputs
+
 rule fastqc:
     input:
-        lambda wildcards: ["data/" + i for i in list(samples[["fq1", "fq2"]].values.flatten()) if wildcards.sample in i]
+        find_fastqc_input
     output:
         html="output/qc/fastqc/{sample}_fastqc.html",
         zip="output/qc/fastqc/{sample}_fastqc.zip"
