@@ -1,0 +1,6 @@
+channels:
+  - bioconda
+  - defaults
+name: deeptools
+dependencies:
+  - deeptools=3.5.0=

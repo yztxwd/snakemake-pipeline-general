@@ -1,0 +1,10 @@
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bowtie2=2.3.5
+  - bwa=0.7.17
+  - fastqc=0.11.8
+  - multiqc=1.7
+  - picard=2.21.4
