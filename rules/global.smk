@@ -4,7 +4,7 @@ def is_single_end(sample, rep, unit):
 def checkcontrol(samples):
     return 'control' in samples['condition'].values
 
-snake_dir = "../"    # define relative directory path
+snake_dir = ".."    # define relative directory path
 
 rule samtools_sort_name:
     input:
