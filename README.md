@@ -14,7 +14,7 @@ The following files could be expected from this general pipeline:
 - output/coverage/{sample}-{rep}.bamCompare.bw
 
 Workflows supported by this general pipeline:
-| name      | Description |
+| Name      | Description |
 | ----------- | ----------- |
 | [chip-seq-standard-pipeline](https://github.com/yztxwd/chip-seq-standard-pipeline) | For ChIP-seq, MNase-seq analysis |
 | [atac-seq-standard-pipeline](https://github.com/yztxwd/atac-seq-standard-pipeline) | For ATAC-seq analysis |
