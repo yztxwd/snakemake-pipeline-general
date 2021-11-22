@@ -3,4 +3,4 @@ channels:
   - defaults
 name: deeptools
 dependencies:
-  - deeptools=3.5.0=
+  - deeptools=3.5.0
