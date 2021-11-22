@@ -29,7 +29,7 @@ rule multiqc:
     input:
         ["output/qc/fastqc/" + str(i).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
     output:
-        html="output/qc/multiqc/multiqc.html"
+        report("output/qc/multiqc/multiqc.html", caption="../report/multiqc.rst", category="QC")
     params:
         config["multiqc"]["params"],
         fastqc_dir="output/qc/fastqc",
