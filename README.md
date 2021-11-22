@@ -1,6 +1,6 @@
 # snakemake-pipeline-general
 
-@Author, Jianyu Yang, Pennsylvania State University
+@Jianyu Yang, Pennsylvania State University
 
 General rules could be used for specific purpose
 
