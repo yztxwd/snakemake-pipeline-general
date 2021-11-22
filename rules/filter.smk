@@ -10,7 +10,8 @@ rule mark_duplicates:
         lambda wildcards: mark_duplicates_find_input(wildcards)
     output:
         bam=temp("output/mapped/{sample}-{rep, [^-]+}-{unit, [^.]+}.markDuplicates.bam"),
-        metrics="output/picard/markDuplicates/{sample}-{rep, [^-]+}-{unit, [^.]+}.markDuplicates.txt"
+        metrics=report("output/picard/markDuplicates/{sample}-{rep, [^-]+}-{unit, [^.]+}.markDuplicates.txt", 
+            caption="../report/mark_duplicates.rst", category="Filter")
     params:
         config["mark_duplicates"]
     log:
