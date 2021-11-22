@@ -9,3 +9,4 @@ dependencies:
   - multiqc=1.7
   - picard=2.21.4
   - trimmomatic=0.39
+  - samtools
