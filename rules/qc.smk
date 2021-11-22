@@ -29,7 +29,7 @@ rule multiqc:
     input:
         ["output/qc/fastqc/" + str(i).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
     output:
-        report("output/qc/multiqc/multiqc.html", caption="../report/multiqc.rst", category="QC")
+        report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
     params:
         config["multiqc"]["params"],
         fastqc_dir="output/qc/fastqc",
@@ -53,7 +53,7 @@ rule count_size:
         bam="output/mapped/{sample}-{rep}.merge.sort.bam",
         bai="output/mapped/{sample}-{rep}.merge.sort.bam.bai"
     output:
-        png="output/qc/bamPEFragmentSize/{sample}-{rep, [^-]+}.hist.png"
+        report("output/qc/bamPEFragmentSize/{sample}-{rep, [^-]+}.hist.png", caption="../report/count_size.rst", category="QC")
     params:
         title="{sample}-{rep}",
         extra="--plotFileFormat png"
