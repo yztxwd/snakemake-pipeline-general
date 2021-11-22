@@ -33,7 +33,7 @@ rule fastp_se:
     input:
         lambda wildcards: "data/" + samples.loc[(wildcards.sample, wildcards.rep, wildcards.unit), "fq1"]
     output:
-        temp("output/trimmed/{sample}-{rep, [^-]+}-{unit, [^.]+}.fastp.fq.gz")
+        temp("output/trimmed/{sample}-{rep, [^-]+}-{unit, [^.]+}.fastp.fq.gz"),
         html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.se.html", caption="../report/fastp.rst", category="fastp")
     log:
         "logs/fastp/{sample}-{rep}-{unit}.fastp.log"
