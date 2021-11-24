@@ -19,3 +19,7 @@ Workflows supported by this general pipeline:
 | [chip-seq-standard-pipeline](https://github.com/yztxwd/chip-seq-standard-pipeline) | For ChIP-seq, MNase-seq analysis |
 | [atac-seq-standard-pipeline](https://github.com/yztxwd/atac-seq-standard-pipeline) | For ATAC-seq analysis |
 | [dna-methylation-pipeline](https://github.com/yztxwd/dna-methylation-pipeline) | For BS-seq, TAB-seq, methylC-seq |
+
+Change log:
+- Nov 20, 2021: All snakemake pipelines have been integrated with cookiecutter, to motivates easily deployment of pipeline
+- Nov 23, 2021: Snakemake report feature integrated (TODO: Custom template for snakemake)
