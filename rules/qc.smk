@@ -31,7 +31,7 @@ rule multiqc:
     output:
         report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
     params:
-        config["multiqc"]["params"],
+        extra=config["multiqc"]["params"],
         fastqc_dir="output/qc/fastqc",
     log:
         "logs/multiqc/multiqc.log"
@@ -40,7 +40,7 @@ rule multiqc:
     shell:
         """
         mkdir -p {output}
-        multiqc {params} --force \
+        multiqc {params.extra} --force \
           -o {output} \
           -n "multiqc.html" \
           {params.fastqc_dir} \
