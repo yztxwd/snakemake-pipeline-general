@@ -16,7 +16,7 @@ samples = pd.read_table(config["samples"]).set_index(["sample", "rep", "unit"], 
 
 rule all:
     input:
-        "output/qc/multiqc/multiqc.html",
+        "output/qc/multiqc/",
         expand("output/qc/bamPEFragmentSize/{samples}-{rep}.hist.png", zip, samples=samples["sample"], rep=samples["rep"]),
         expand("output/coverage/{samples}-{rep}.bgToBw.bw", zip, samples=samples["sample"], rep=samples["rep"]),
         expand("output/coverage/{samples}-{rep}.bamCov.bw", zip, samples=samples["sample"], rep=samples["rep"]),

@@ -53,7 +53,7 @@ rule count_size:
         bam="output/mapped/{sample}-{rep}.merge.sort.bam",
         bai="output/mapped/{sample}-{rep}.merge.sort.bam.bai"
     output:
-        report("output/qc/bamPEFragmentSize/{sample}-{rep, [^-]+}.hist.png", caption="../report/count_size.rst", category="QC")
+        png=report("output/qc/bamPEFragmentSize/{sample}-{rep, [^-]+}.hist.png", caption="../report/count_size.rst", category="QC")
     params:
         title="{sample}-{rep}",
         extra="--plotFileFormat png"
