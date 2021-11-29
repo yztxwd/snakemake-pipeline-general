@@ -33,15 +33,15 @@ rule multiqc:
     params:
         config["multiqc"]["params"],
         fastqc_dir="output/qc/fastqc",
-        multiqc_dir="output/qc/multiqc/"
     log:
         "logs/multiqc/multiqc.log"
     conda:
         f"{snake_dir}/envs/common.yaml"
     shell:
         """
+        mkdir -p {output}
         multiqc {params} --force \
-          -o {params.multiqc_dir} \
+          -o {output} \
           -n "multiqc.html" \
           {params.fastqc_dir} \
           &> {log}
@@ -65,6 +65,6 @@ rule count_size:
         cpus=config["threads"],
         mem=config["mem"]
     conda:
-        f"{snake_dir}/envs/common.yaml"
+        f"{snake_dir}/envs/deeptools.yaml"
     shell:
         "bamPEFragmentSize --bamfiles {input.bam} --histogram {output.png} {params.extra} -T {params.title} -p {threads} > {log}"
