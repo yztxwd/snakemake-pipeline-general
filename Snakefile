@@ -35,6 +35,7 @@ report: "report/workflow.rst"
 
 #### load rules ####
 include: "rules/global.smk"
+include: "rules/download.smk"
 include: "rules/qc.smk"
 include: "rules/trim.smk"
 include: "rules/fastp.smk"
