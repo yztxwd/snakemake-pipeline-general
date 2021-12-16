@@ -1,6 +1,6 @@
 rule fastq_dump_single:
     output:
-        "data/{sra, SRR[0-9]*\.f[ast]*q\.gz}"
+        "data/{sra, SRR[0-9]*}.fastq.gz"
     conda:
         f"{snake_dir}/envs/common.yaml"
     shell:
@@ -11,8 +11,8 @@ rule fastq_dump_single:
 
 rule fastq_dump_pair:
     output:
-        r1="data/{sra, SRR[0-9]*\_1.f[ast]*q\.gz}",
-        r2="data/{sra, SRR[0-9]*\_2.f[ast]*q\.gz}"
+        r1="data/{sra, SRR[0-9]*}_1.fastq.gz",
+        r2="data/{sra, SRR[0-9]*}_2.fastq.gz"
     conda:
         f"{snake_dir}/envs/common.yaml"
     shell:
