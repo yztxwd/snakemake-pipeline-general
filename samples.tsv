@@ -1,3 +1,3 @@
 sample	condition	rep	unit	fq1	fq2
-A	treatment	rep1	lane1	A.1.fastq.gz	A.2.fastq.gz
+A	treatment	rep1	lane1	SRR123.fastq.gz	A.2.fastq.gz
 B	control	rep1	tech1	B.1.fastq.gz
