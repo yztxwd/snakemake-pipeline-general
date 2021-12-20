@@ -6,14 +6,14 @@ samples: samples.tsv
 # column "strandedness" is present (optional), value can be empty or has one of these values: none, yes
 # or reverse.
 
-aligner: "bowtie2" # bowtie2 or bwa
-skiptrim: false
-trimmer: "trimmomatic" # trimmomatic or fastp
+aligner: "{{cookiecutter.aligner}}" # bowtie2 or bwa
+skiptrim: {{cookiecutter.skiptrim}}
+trimmer: "{{cookiecutter.trimmer}}" # trimmomatic or fastp
 
 # specify the resources available for computational heavy rules, including: trimmomatic, samtools, bowtie2, bwa, deeptools...
-nodes: 1
-threads: 20
-mem: 20
+nodes: {{cookiecutter.nodes}}
+threads: {{cookiecutter.threads}}
+mem: {{cookiecutter.mem}}
 
 multiqc:
   params: ""
@@ -21,28 +21,28 @@ multiqc:
 trimmomatic:
   # the trimming parameter, see manual: http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf
   trimmer: "LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:15"
-  pe_adapter: "data/TruSeq3-PE.fa"
-  se_adapter: "data/TruSeq3-SE.fa"
+  pe_adapter: "{{cookiecutter.pe_adapter}}"
+  se_adapter: "{{cookiecutter.se_adapter}}"
   adapter_trimmer: ":2:30:10"
 
 fastp:
   # manual: https://github.com/OpenGene/fastp
-  pe_adapter: "data/TruSeq3-PE.fa"
-  se_adapter: "data/TruSeq3-SE.fa"
-  extra: "-g"
+  pe_adapter: "{{cookiecutter.pe_adapter}}"
+  se_adapter: "{{cookiecutter.se_adapter}}"
+  extra: "{{cookiecutter.fastp}}"
 
 bowtie2:
   # bowtie2 index
-  index: "path/to/bowtie2/index"
+  index: "{{cookiecutter.bowtie2_index}}"
   # extra parameters, see manual: http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
-  extra: ""
+  extra: "{{cookiecutter.bowtie2}}"
 
 # bwa-mem
 bwa:
   # bwa index
-  index: "path/to/bwa/index"
+  index: "{{cookiecutter.bwa_index}}"
   # extra parameters, see manual: http://bio-bwa.sourceforge.net/bwa.shtml
-  extra: ""
+  extra: "{{cookiecutter.bwa_mem}}"
 
 mark_duplicates: ""
 
@@ -56,7 +56,7 @@ samtools_view:
 # this is skipped by default, enable when in need
 # CAUTION: Don't specify MAPQ threshold > 0 when using BWA since BWA doesn't output meaningful MAPQ!!!
 filter:
-  skip: true
+  skip: {{cookiecutter.skipfilter}}
   # parameters
   pe: "-m pair -f 0 -t 10"
   se: "-m single -f 0 -t 10"
@@ -64,7 +64,7 @@ filter:
 genomecov: "-bg -pc"
 
 bedGraphToBigWig:
-  chrom: "data/Mus_musculus.GRCm38.dna.merge.fa.fai"
+  chrom: "{{cookiecutter.genome_fai}}"
   params: ""
 
 bamCoverage: ""
