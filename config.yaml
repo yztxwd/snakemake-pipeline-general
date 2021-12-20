@@ -69,5 +69,9 @@ bedGraphToBigWig:
 
 bamCoverage: ""
 
-bamCompare: "--scaleFactorsMethod SES -bl data/mm10-blacklist.v2.bed"
+bamCompare: "--scaleFactorsMethod SES -bl {{cookiecutter.blacklist}}"
+
+computeMatrix: 
+  region: "{{cookiecutter.transcriptome}}"
+  params: "-a 1000 -b 1000 --referencePoint TSS --missingDataAsZero --binSize 1 -bl {{cookiecutter.blacklist}}"
 ####<<<< snakemake-pipeline-general ####

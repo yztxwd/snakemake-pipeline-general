@@ -79,3 +79,27 @@ if checkcontrol(samples):
             bamCompare -b1 {input.ip} -b2 {input.input} -o {output} -of bigwig \
                 {params} -p {threads}
             """
+
+rule TSS_profile:
+    input:
+        bw="output/coverage/{prefix}.bamCov.bw",
+        region=config["computeMatrix"]["region"]
+    output:
+        matrix="output/profile/{prefix}.tss2kbp.matrix.gz",
+        png=report("output/profile/{prefix}.tss2kbp.matrix.heatmap.png", caption="../report/plotHeatmap.rst", category="deeptools")
+    params:
+        config["computeMatrix"]["params"]
+    log:
+        "logs/deeptools/{prefix}.computeMatrix.log"
+    threads:
+        config["threads"]
+    resources:
+        cpus=config["threads"],
+        mem=config["mem"]
+    conda:
+        f"{snake_dir}/envs/common.yaml"
+    shell:
+        """
+        computeMatrix reference-point -S {input.bw} -R {input.region} -o {output.matrix} {params} -p {threads}
+        plotHeatmap -m {output.matrix} -o {output.png}
+        """

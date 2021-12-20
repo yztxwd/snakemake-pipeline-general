@@ -21,8 +21,11 @@ rule all:
         expand("output/coverage/{samples}-{rep}.bgToBw.bw", zip, samples=samples["sample"], rep=samples["rep"]),
         expand("output/coverage/{samples}-{rep}.bamCov.bw", zip, samples=samples["sample"], rep=samples["rep"]),
         expand('output/coverage/{samples}-{rep}.bamCompare.bw', zip, 
-                 samples=samples.loc[samples["condition"]!="control", "sample"] if "control" in samples["condition"].values else [],
-                 rep=samples.loc[samples["condition"]!="control", "rep"] if "control" in samples["condition"].values else []),
+                samples=samples.loc[samples["condition"]!="control", "sample"] if "control" in samples["condition"].values else [],
+                rep=samples.loc[samples["condition"]!="control", "rep"] if "control" in samples["condition"].values else []),
+        expand("output/profile/{samples}-{rep}.merge.tss2kbp.matrix.heatmap.png", zip,
+                samples=samples.loc[samples["condition"]!="control", "sample"], 
+                rep=samples.loc[samples["condition"]!="control", "rep"]),
 
 #### setup singularity ####
 
