@@ -1,3 +1,5 @@
+import os
+
 def find_fastqc_input(wildcards):
     global samples
     fqs = samples[["fq1", "fq2"]].values.flatten()
@@ -21,13 +23,11 @@ rule fastqc:
         fastqc {params} --quiet \
           --outdir output/qc/fastqc/ {input[0]} \
           > {log}
-        mv output/qc/fastqc/$(basename {input} .fastq.gz)_fastqc.html {output.html} 2> /dev/null || true
-        mv output/qc/fastqc/$(basename {input} .fastq.gz)_fastqc.zip {output.zip} 2> /dev/null || true
         """
 
 rule multiqc:
     input:
-        ["output/qc/fastqc/" + str(i).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
+        ["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
     output:
         report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
     params:
