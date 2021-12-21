@@ -21,5 +21,6 @@ Workflows supported by this general pipeline:
 | [dna-methylation-pipeline](https://github.com/yztxwd/dna-methylation-pipeline) | For BS-seq, TAB-seq, methylC-seq |
 
 Change log:
+- Dec 21, 2021: Signal coverage profile around TSS integrated
+- Nov 23, 2021: Snakemake report feature integrated 
 - Nov 20, 2021: All snakemake pipelines have been integrated with cookiecutter, to motivates easily deployment of pipeline
-- Nov 23, 2021: Snakemake report feature integrated (TODO: Custom template for snakemake)
