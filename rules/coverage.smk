@@ -97,7 +97,7 @@ rule TSS_profile:
         cpus=config["threads"],
         mem=config["mem"]
     conda:
-        f"{snake_dir}/envs/common.yaml"
+        f"{snake_dir}/envs/deeptools.yaml"
     shell:
         """
         computeMatrix reference-point -S {input.bw} -R {input.region} -o {output.matrix} {params} -p {threads}
