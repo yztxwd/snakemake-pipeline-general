@@ -10,6 +10,7 @@ rule multiqc:
                     zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
         markDuplicates=expand("output/picard/markDuplicates/{sample}-{rep}-{unit}.markDuplicates.txt", zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
         flagstat=expand("output/mapped/{sample}-{rep}-{unit}.flagstat", zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
+        fragmentSize="output/qc/CollectInsertSizeMetrics/{sample}-{rep}.insert_size_metrics.txt", zip, sample=samples["sample"], rep=samples["rep"])
     output:
         report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
     params:
