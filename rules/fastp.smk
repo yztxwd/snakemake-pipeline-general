@@ -7,7 +7,8 @@ rule fastp_pe:
         r2=temp("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.2.fq.gz"),
         r1_unpaired=temp("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.1.unpaired.fq.gz"),
         r2_unpaired=temp("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.2.unpaired.fq.gz"),
-        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.pe.html", caption="../report/fastp.rst", category="fastp")
+        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.pe.html", caption="../report/fastp.rst", category="fastp"),
+        json="output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.pe.json"
     log:
         "logs/fastp/{sample}-{rep}-{unit}.fastp.log"
     params:
@@ -26,7 +27,9 @@ rule fastp_pe:
           -o {output.r1} -O {output.r2} \
           --unpaired1 {output.r1_unpaired} --unpaired2 {output.r2_unpaired} \
           --adapter_fasta {params.adapter} \
-          --html {output.html} {params.extra} &> {log}
+          --html {output.html} \
+          --json {output.json} \
+            {params.extra} &> {log}
         """
 
 rule fastp_se:
@@ -34,7 +37,8 @@ rule fastp_se:
         lambda wildcards: "data/" + samples.loc[(wildcards.sample, wildcards.rep, wildcards.unit), "fq1"]
     output:
         temp("output/trimmed/{sample}-{rep, [^-]+}-{unit, [^.]+}.fastp.fq.gz"),
-        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.se.html", caption="../report/fastp.rst", category="fastp")
+        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.se.html", caption="../report/fastp.rst", category="fastp"),
+        json="output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.se.json"
     log:
         "logs/fastp/{sample}-{rep}-{unit}.fastp.log"
     params:
@@ -52,6 +56,8 @@ rule fastp_se:
         fastp -i {input} \
           -o {output} \
           --adapter_fasta {params.adapter} \
-          --html {output.html} {params.extra} &> {log}
+          --html {output.html} \
+          --json {output.json} \
+          {params.extra} &> {log}
         """
 
