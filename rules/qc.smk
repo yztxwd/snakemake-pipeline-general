@@ -48,7 +48,7 @@ rule multiqc:
         """
         
 
-rule count_size:
+rule count_size_deeptools:
     input:
         bam="output/mapped/{sample}-{rep}.merge.sort.bam",
         bai="output/mapped/{sample}-{rep}.merge.sort.bam.bai"
@@ -68,3 +68,23 @@ rule count_size:
         f"{snake_dir}/envs/deeptools.yaml"
     shell:
         "bamPEFragmentSize --bamfiles {input.bam} --histogram {output.png} {params.extra} -T {params.title} -p {threads} > {log}"
+
+rule count_size_picard:
+    input:
+        bam="output/mapped/{sample}-{rep}.merge.sort.bam",
+        bai="output/mapped/{sample}-{rep}.merge.sort.bam.bai"
+    output:
+        pdf=report("output/qc/CollectInsertSizeMetrics/{sample}-{rep, [^-]+}.insert_size_hist.pdf", caption="../report/count_size.rst", category="QC"),
+        txt="output/qc/CollectInsertSizeMetrics/{sample}-{rep, [^-]+}.insert_size_metrics.txt"
+    params:
+        extra="-M 0.5"
+    log:
+        "logs/bamPEFragmentSize/{sample}-{rep}.log"
+    threads:
+        config["threads"]
+    resources:
+        mem=config["mem"]
+    conda:
+        f"{snake_dir}/envs/common.yaml"
+    shell:
+        "CollectInsertSizeMetrics -I {input.bam} -O {output.txt} -H {output.pdf} {params.extra}"
