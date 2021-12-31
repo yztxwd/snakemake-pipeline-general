@@ -41,7 +41,7 @@ rule bowtie2_mapping_pe:
         """
         bowtie2 --threads {threads} {params.extra} \
             -x {params.index} -1 {input[0]} -2 {input[1]} \
-            | samtools view -Sbh -o {output} &> {log}
+            | samtools view -Sbh -o {output} 2> {log}
         """
 
 rule bowtie2_mapping_se:

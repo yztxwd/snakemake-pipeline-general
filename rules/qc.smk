@@ -1,5 +1,34 @@
 import os
 
+rule multiqc:
+    input:
+        fastqc=["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)],
+        # how to integrate both trimmomatic and fastp?
+        trimmer=expand("output/trimmed/{sample}-{rep}-{unit}.fastp.{type}.json" if config["aligner"]=="fastp" else "",
+                    zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"], type=["se" if pd.isnull(i) else "pe" for i in samples["fq2"]]),
+        aligner=expand("logs/bowtie2/{sample}-{rep}-{unit}.log" if config["aliner"]=="bowtie2" else "",
+                    zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
+        markDuplicates=expand("output/picard/markDuplicates/{sample}-{rep}-{unit}.markDuplicates.txt", zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
+        flagstat=expand("output/mapped/{sample}-{rep}-{unit}.flagstat", zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
+    output:
+        report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
+    params:
+        extra=config["multiqc"]["params"],
+        fastqc_dir="output/qc/fastqc",
+    log:
+        "logs/multiqc/multiqc.log"
+    conda:
+        f"{snake_dir}/envs/common.yaml"
+    shell:
+        """
+        mkdir -p {output}
+        multiqc {params.extra} --force \
+          -o {output} \
+          -n "multiqc.html" \
+          {params.fastqc_dir} \
+          &> {log}
+        """
+
 def find_fastqc_input(wildcards):
     global samples
     fqs = samples[["fq1", "fq2"]].values.flatten()
@@ -25,28 +54,16 @@ rule fastqc:
           > {log}
         """
 
-rule multiqc:
+rule samtools_flagstat:
     input:
-        ["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
+        "output/mapped/{sample}-{rep}-{unit}.flag.bam"
     output:
-        report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
-    params:
-        extra=config["multiqc"]["params"],
-        fastqc_dir="output/qc/fastqc",
-    log:
-        "logs/multiqc/multiqc.log"
+        "output/mapped/{sample}-{rep, [^-]+}-{unit, [^.]+}.flagstat"
+    params: ""
     conda:
-        f"{snake_dir}/envs/common.yaml"
+        f"{snake_dir}/envs/common.yaml"    
     shell:
-        """
-        mkdir -p {output}
-        multiqc {params.extra} --force \
-          -o {output} \
-          -n "multiqc.html" \
-          {params.fastqc_dir} \
-          &> {log}
-        """
-        
+        "samtools flagstat {input} > {output}"
 
 rule count_size_deeptools:
     input:
