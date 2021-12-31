@@ -26,7 +26,7 @@ rule bowtie2_mapping_pe:
     output:
         temp("output/mapped/{sample}-{rep}-{unit, [^.]+}.pe.bowtie2.bam")
     log:
-        "logs/bowtie2/{sample}-{rep, [^-]+}-{unit}.log"
+        "logs/bowtie2/{sample}-{rep, [^-]+}-{unit}.pe.log"
     params:
         index=lambda wildcards: config["bowtie2"]["index"],
         extra=config["bowtie2"]["extra"]
@@ -50,7 +50,7 @@ rule bowtie2_mapping_se:
     output:
         temp("output/mapped/{sample}-{rep}-{unit, [^.]+}.se.bowtie2.bam")
     log:
-        "logs/bowtie2/{sample}-{rep, [^-]+}-{unit}.log"
+        "logs/bowtie2/{sample}-{rep, [^-]+}-{unit}.se.log"
     params:
         index=lambda wildcards: config["bowtie2"]["index"],
         extra=config["bowtie2"]["extra"]

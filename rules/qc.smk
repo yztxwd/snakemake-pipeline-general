@@ -2,15 +2,20 @@ import os
 
 rule multiqc:
     input:
-        fastqc=["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)],
         # how to integrate both trimmomatic and fastp?
-        trimmer=expand("output/trimmed/{sample}-{rep}-{unit}.fastp.{type}.json" if config["aligner"]=="fastp" else "",
-                    zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"], type=["se" if pd.isnull(i) else "pe" for i in samples["fq2"]]),
-        aligner=expand("logs/bowtie2/{sample}-{rep}-{unit}.log" if config["aliner"]=="bowtie2" else "",
-                    zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
-        markDuplicates=expand("output/picard/markDuplicates/{sample}-{rep}-{unit}.markDuplicates.txt", zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
-        flagstat=expand("output/mapped/{sample}-{rep}-{unit}.flagstat", zip, sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
-        fragmentSize="output/qc/CollectInsertSizeMetrics/{sample}-{rep}.insert_size_metrics.txt", zip, sample=samples["sample"], rep=samples["rep"])
+        trimmer=expand("output/trimmed/{sample}-{rep}-{unit}.fastp.{type}.json" if config["aligner"]=="fastp" else "", zip,
+                        sample=samples["sample"], rep=samples["rep"], unit=samples["unit"], 
+                        type=["se" if pd.isnull(i) else "pe" for i in samples["fq2"]]),
+        aligner=expand("logs/bowtie2/{sample}-{rep}-{unit}.{type}.log" if config["aligner"]=="bowtie2" else "", zip, 
+                        sample=samples["sample"], rep=samples["rep"], unit=samples["unit"],
+                        type=["se" if pd.isnull(i) else "pe" for i in samples["fq2"]]),
+        markDuplicates=expand("output/picard/markDuplicates/{sample}-{rep}-{unit}.markDuplicates.txt", zip, 
+                        sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
+        flagstat=expand("output/mapped/{sample}-{rep}-{unit}.flagstat", zip, 
+                        sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
+        fragmentSize="output/qc/CollectInsertSizeMetrics/{sample}-{rep}.insert_size_metrics.txt", zip, 
+                        sample=samples["sample"], rep=samples["rep"]),
+        fastqc=["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
     output:
         report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
     params:
