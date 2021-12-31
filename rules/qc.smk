@@ -100,7 +100,7 @@ rule count_size_picard:
         pdf=report("output/qc/CollectInsertSizeMetrics/{sample}-{rep, [^-]+}.insert_size_hist.pdf", caption="../report/count_size.rst", category="QC"),
         txt="output/qc/CollectInsertSizeMetrics/{sample}-{rep, [^-]+}.insert_size_metrics.txt"
     params:
-        extra="-M 0.5"
+        extra="M=0.05"
     log:
         "logs/bamPEFragmentSize/{sample}-{rep}.log"
     threads:
@@ -110,4 +110,4 @@ rule count_size_picard:
     conda:
         f"{snake_dir}/envs/common.yaml"
     shell:
-        "CollectInsertSizeMetrics -I {input.bam} -O {output.txt} -H {output.pdf} {params.extra}"
+        "picard CollectInsertSizeMetrics I={input.bam} O={output.txt} H={output.pdf} {params.extra}"
