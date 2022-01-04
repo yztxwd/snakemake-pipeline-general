@@ -1,0 +1,4 @@
+channels:
+  - hcc
+dependencies:
+  - aspera-cli
