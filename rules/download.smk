@@ -26,7 +26,7 @@ rule aspera:
     output:
         "data/aspera/{accession, [SE]RR*[0-9]*[_12]*}.fastq.gz"
     params:
-        url=lambda wildcards: downloads.loc[(wildcards.accession + ".fastq.gz"), "url"]
+        url=lambda wildcards: downloads.loc[(wildcards.accession + ".fastq.gz"), "url"],
         private_key=config["aspera_private_key"]
     conda:
         f"{snake_dir}/envs/aspera.yaml"
