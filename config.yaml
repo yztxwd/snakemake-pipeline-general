@@ -5,6 +5,7 @@ samples: samples.tsv
 # Units are techinical replicates (e.g. lanes, or resequencing of the same biological sample). If the 
 # column "strandedness" is present (optional), value can be empty or has one of these values: none, yes
 # or reverse.
+downloads: downloads.tsv
 
 aligner: "{{cookiecutter.aligner}}" # bowtie2 or bwa
 skiptrim: {{cookiecutter.skiptrim}}

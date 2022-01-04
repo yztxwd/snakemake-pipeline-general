@@ -12,6 +12,8 @@ configfile: "config.yaml"
 samples = pd.read_table(config["samples"]).set_index(["sample", "rep", "unit"], drop=False)
 #validate(samples, schema="schemas/samples.schema.yaml")
 
+downloads = pd.read_table(config["downloads"]).set_index("fq", drop=False)
+
 #### target rules ####
 
 rule all:
