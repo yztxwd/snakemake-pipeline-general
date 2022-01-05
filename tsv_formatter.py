@@ -22,14 +22,14 @@ def main():
     downloads.to_csv("downloads.tsv", header=True, index=False, sep="\t")
     
     # samples.tsv
-    samples = meta.groupby("Title").apply(lambda chunk: pd.Series(chunk["FastQ filename"].to_list())).reset_index()
+    samples = meta.groupby(["Title", "Accession"]).apply(lambda chunk: pd.Series(chunk["FastQ filename"].to_list())).reset_index()
     if samples.shape[1] == 2:
         # single end
-        samples.columns = ["sample", "fq1"]
+        samples.columns = ["sample", "Accession", "fq1"]
         samples["fq2"] = None
     else:
         # pair end
-        samples.columns = ["sample", "fq1", "fq2"]
+        samples.columns = ["sample", "Accession", "fq1", "fq2"]
     samples['condition'] = "WT"
     samples['rep'] = "rep1"
     samples['unit'] = "tech1"
