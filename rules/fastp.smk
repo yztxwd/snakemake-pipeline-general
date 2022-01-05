@@ -7,8 +7,8 @@ rule fastp_pe:
         r2=temp("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.2.fq.gz"),
         r1_unpaired=temp("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.1.unpaired.fq.gz"),
         r2_unpaired=temp("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.2.unpaired.fq.gz"),
-        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.pe.html", caption="../report/fastp.rst", category="fastp"),
-        json="output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.pe.json"
+        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.pe.fastp.html", caption="../report/fastp.rst", category="fastp"),
+        json="output/trimmed/{sample}-{rep, [^-]+}-{unit}.pe.fastp.json"
     log:
         "logs/fastp/{sample}-{rep}-{unit}.fastp.log"
     params:
@@ -37,8 +37,8 @@ rule fastp_se:
         lambda wildcards: "data/" + samples.loc[(wildcards.sample, wildcards.rep, wildcards.unit), "fq1"]
     output:
         temp("output/trimmed/{sample}-{rep, [^-]+}-{unit, [^.]+}.fastp.fq.gz"),
-        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.se.html", caption="../report/fastp.rst", category="fastp"),
-        json="output/trimmed/{sample}-{rep, [^-]+}-{unit}.fastp.se.json"
+        html=report("output/trimmed/{sample}-{rep, [^-]+}-{unit}.se.fastp.html", caption="../report/fastp.rst", category="fastp"),
+        json="output/trimmed/{sample}-{rep, [^-]+}-{unit}.se.fastp.json"
     log:
         "logs/fastp/{sample}-{rep}-{unit}.fastp.log"
     params:
