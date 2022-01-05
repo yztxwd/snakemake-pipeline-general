@@ -3,7 +3,7 @@ import os
 rule multiqc:
     input:
         # how to integrate both trimmomatic and fastp?
-        trimmer=expand("output/trimmed/{sample}-{rep}-{unit}.fastp.{type}.json" if config["trimmer"]=="fastp" else "", zip,
+        trimmer=expand("output/trimmed/{sample}-{rep}-{unit}.{type}.fastp.json" if config["trimmer"]=="fastp" else "", zip,
                         sample=samples["sample"], rep=samples["rep"], unit=samples["unit"], 
                         type=["se" if pd.isnull(i) else "pe" for i in samples["fq2"]]),
         aligner=expand("logs/bowtie2/{sample}-{rep}-{unit}.{type}.log" if config["aligner"]=="bowtie2" else "", zip, 
