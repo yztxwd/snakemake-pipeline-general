@@ -3,7 +3,7 @@ import os
 rule multiqc:
     input:
         # how to integrate both trimmomatic and fastp?
-        trimmer=expand("output/trimmed/{sample}-{rep}-{unit}.fastp.{type}.json" if config["aligner"]=="trimmer" else "", zip,
+        trimmer=expand("output/trimmed/{sample}-{rep}-{unit}.fastp.{type}.json" if config["trimmer"]=="fastp" else "", zip,
                         sample=samples["sample"], rep=samples["rep"], unit=samples["unit"], 
                         type=["se" if pd.isnull(i) else "pe" for i in samples["fq2"]]),
         aligner=expand("logs/bowtie2/{sample}-{rep}-{unit}.{type}.log" if config["aligner"]=="bowtie2" else "", zip, 
@@ -13,8 +13,7 @@ rule multiqc:
                         sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
         flagstat=expand("output/mapped/{sample}-{rep}-{unit}.flagstat", zip, 
                         sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
-        fragmentSize=expand("output/qc/CollectInsertSizeMetrics/{sample}-{rep}.insert_size_metrics.txt", zip, 
-                        sample=samples["sample"], rep=samples["rep"]),
+        fragmentSize=[f"output/qc/CollectInsertSizeMetrics/{row.sample}-{row.rep}.insert_size_metrics.txt" for row in samples.itertuples() if not pd.isnull(row.fq2)],
         fastqc=["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
     output:
         html="output/qc/multiqc/multiqc.html",
