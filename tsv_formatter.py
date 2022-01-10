@@ -22,7 +22,8 @@ def main():
     downloads.to_csv("downloads.tsv", header=True, index=False, sep="\t")
     
     # samples.tsv
-    samples = meta.groupby(["Title", "Accession"]).apply(lambda chunk: pd.Series(chunk["FastQ filename"].to_list())).reset_index()
+    temp = meta.groupby(["Title", "Accession"]).apply(lambda chunk: chunk["FastQ filename"].to_list())
+    samples = pd.DataFrame(temp.to_list(), index=temp.index).reset_index()
     if samples.shape[1] == 2:
         # single end
         samples.columns = ["sample", "Accession", "fq1"]
