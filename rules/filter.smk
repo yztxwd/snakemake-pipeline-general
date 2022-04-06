@@ -12,7 +12,6 @@ rule mark_duplicates:
         bam=temp("output/mapped/{sample}-{rep, [^-]+}-{unit, [^.]+}.markDuplicates.bam"),
         metrics=report("output/picard/markDuplicates/{sample}-{rep, [^-]+}-{unit, [^.]+}.markDuplicates.txt", 
             caption="../report/mark_duplicates.rst", category="Filter")
-    group: "bam_filter"
     params:
         config["mark_duplicates"]
     log:
@@ -33,7 +32,6 @@ rule samtools_view:
         "output/mapped/{sample}-{rep}-{unit}.markDuplicates.bam"
     output:
         temp("output/mapped/{sample}-{rep, [^-]+}-{unit, [^.]+}.flag.bam")
-    group: "bam_filter"
     params:
         lambda wildcards: ((config["samtools_view"]["se"] if is_single_end(**wildcards) 
             else config["samtools_view"]["pe"]))
@@ -53,7 +51,6 @@ rule mapq_filter:
         "output/mapped/{sample}-{rep}-{unit}.flag.sortName.bam"
     output:
         temp("output/mapped/{sample}-{rep, [^-]+}-{unit, [^.]+}.flag.filtered.bam"),
-    group: "bam_filter"
     params:
         lambda wildcards: (config["filter"]["se"] if is_single_end(**wildcards) 
             else config["filter"]["pe"]) 

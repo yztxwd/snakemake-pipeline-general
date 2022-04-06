@@ -18,7 +18,6 @@ rule multiqc:
     output:
         html="output/qc/multiqc/multiqc.html",
         dirname=report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
-    group: "QC"
     params:
         extra=config["multiqc"]["params"],
     log:
@@ -39,7 +38,6 @@ rule fastqc:
     output:
         html="output/qc/fastqc/{sample}_fastqc.html",
         zip="output/qc/fastqc/{sample}_fastqc.zip"
-    group: "QC"
     params: ""
     log:
         "logs/fastqc/{sample}.fastqc.log"
@@ -57,7 +55,6 @@ rule samtools_flagstat:
         "output/mapped/{sample}-{rep}-{unit}.flag.bam"
     output:
         "output/mapped/{sample}-{rep, [^-]+}-{unit, [^.]+}.flagstat"
-    group: "QC"
     params: ""
     conda:
         f"{snake_dir}/envs/common.yaml"    
@@ -70,7 +67,6 @@ rule count_size_deeptools:
         bai="output/mapped/{sample}-{rep}.merge.sort.bam.bai"
     output:
         png=report("output/qc/bamPEFragmentSize/{sample}-{rep, [^-]+}.hist.png", caption="../report/count_size.rst", category="QC")
-    group: "QC"
     params:
         title="{sample}-{rep}",
         extra="--plotFileFormat png"
@@ -93,7 +89,6 @@ rule count_size_picard:
     output:
         pdf=report("output/qc/CollectInsertSizeMetrics/{sample}-{rep, [^-]+}.insert_size_hist.pdf", caption="../report/count_size.rst", category="QC"),
         txt="output/qc/CollectInsertSizeMetrics/{sample}-{rep, [^-]+}.insert_size_metrics.txt"
-    group: "QC"
     params:
         extra="M=0.05"
     log:
