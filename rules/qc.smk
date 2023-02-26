@@ -14,7 +14,7 @@ rule multiqc:
         flagstat=expand("output/mapped/{sample}-{rep}-{unit}.flagstat", zip, 
                         sample=samples["sample"], rep=samples["rep"], unit=samples["unit"]),
         fragmentSize=[f"output/qc/CollectInsertSizeMetrics/{row.sample}-{row.rep}.insert_size_metrics.txt" for row in samples.itertuples() if not pd.isnull(row.fq2)],
-        fastqc=["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
+        fastqc=["output/qc/fastqc/" + os.path.basename(str(i)).replace('.fastq', '').replace('.fq.gz', '').replace('.fastq.gz', '') + "_fastqc.html" for i in list(samples[["fq1", "fq2"]].values.flatten()) if not pd.isnull(i)]
     output:
         html="output/qc/multiqc/multiqc.html",
         dirname=report(directory("output/qc/multiqc"), caption="../report/multiqc.rst", htmlindex="multiqc.html", category="QC")
