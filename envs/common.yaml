@@ -10,5 +10,5 @@ dependencies:
   - picard=2.21.4
   - trimmomatic=0.39
   - samtools
-  - sra-tools
+  - sra-tools>=3.0.0
   - tbb=2020.2

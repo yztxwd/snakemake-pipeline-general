@@ -5,7 +5,7 @@ rule fastq_dump_single:
         f"{snake_dir}/envs/common.yaml"
     shell:
         """
-        fastq-dump -O data/ {wildcards.sra}
+        fasterq-dump -O data/ {wildcards.sra}
         gzip data/{wildcards.sra}.fastq
         """
 
@@ -17,7 +17,7 @@ rule fastq_dump_pair:
         f"{snake_dir}/envs/common.yaml"
     shell:
         """
-        fastq-dump --split-3 -O data/ {wildcards.sra}
+        fasterq-dump --split-3 -O data/ {wildcards.sra}
         gzip data/{wildcards.sra}_1.fastq
         gzip data/{wildcards.sra}_2.fastq
         """
