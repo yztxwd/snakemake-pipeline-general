@@ -1,25 +1,22 @@
 rule fastq_dump_single:
     output:
-        temp("data/{sra, SRR[0-9]*}.fastq.gz")
+        temp("data/{sra, SRR[0-9]*}.fastq")
     conda:
         f"{snake_dir}/envs/common.yaml"
     shell:
         """
         fasterq-dump -O data/ {wildcards.sra}
-        gzip data/{wildcards.sra}.fastq
         """
 
 rule fastq_dump_pair:
     output:
-        r1=temp("data/{sra, SRR[0-9]*}_1.fastq.gz"),
-        r2=temp("data/{sra, SRR[0-9]*}_2.fastq.gz")
+        r1=temp("data/{sra, SRR[0-9]*}_1.fastq"),
+        r2=temp("data/{sra, SRR[0-9]*}_2.fastq")
     conda:
         f"{snake_dir}/envs/common.yaml"
     shell:
         """
         fasterq-dump --split-3 -O data/ {wildcards.sra}
-        gzip data/{wildcards.sra}_1.fastq
-        gzip data/{wildcards.sra}_2.fastq
         """
 
 rule aspera:
