@@ -23,7 +23,7 @@ rule multiqc:
     log:
         "logs/multiqc/multiqc.log"
     wrapper:
-        "https://raw.githubusercontent.com/yztxwd/snakemake-wrappers/master/bio/multiqc"
+        "v1.23.4/bio/multiqc"
 
 def find_fastqc_input(wildcards):
     global samples
