@@ -1,4 +1,5 @@
 {
+    "directory_name": "snakemake-pipeline-general",
     "aligner": [
         "bowtie2",
         "bwa"
