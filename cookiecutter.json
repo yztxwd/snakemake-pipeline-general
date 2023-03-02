@@ -1,0 +1,37 @@
+{
+    "aligner": [
+        "bowtie2",
+        "bwa"
+    ],
+    "skiptrim": [
+        false,
+        true
+    ],
+    "trimmer": [
+        "trimmomatic",
+        "fastp"
+    ],
+    "nodes": 1,
+    "threads": 20,
+    "mem": 32,
+    "pe_adapter": "path/to/PE/adapter",
+    "se_adapter": "path/to/SE/adapter",
+    "fastp": "-g is suggested to handle poly-G issue on new sequencer",
+    "bowtie2_index": "path/to/bowtie2/index",
+    "bowtie2": "",
+    "bwa_index": "path/to/bwa/index",
+    "bwa_mem": "",
+    "skipfilter": [
+        true,
+        false
+    ],
+    "genome_fai": "path/to/genome/fai",
+    "bamCoverage_pe": "--extendReads",
+    "bamCoverage_se": "--extendReads 200",
+    "blacklist": "path/to/blacklist",
+    "transcriptome": "GTF or BED gene/transcript annotation file",
+    "_copy_without_render": [
+        "*.smk",
+        "*Snakefile"
+    ]
+}
