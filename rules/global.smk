@@ -1,3 +1,7 @@
+def is_single_end_by_first_unit(sample, rep):
+    # determine if a {sample}-{rep} is single end by the first unit
+    return pd.isnull(samples.loc[(sample, rep), "fq2"].iloc[0])
+
 def is_single_end(sample, rep, unit):
     return pd.isnull(samples.loc[(sample, rep, unit), "fq2"])
 

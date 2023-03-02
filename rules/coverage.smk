@@ -41,7 +41,7 @@ rule bamCoverage:
     log:
         "logs/bamCoverage/{sample}-{rep}.log"
     params:
-        config["bamCoverage"]
+        lambda wildcards: config["bamCoverage"]["se"] if is_single_end_by_first_unit(**wildcards) else config["bamCoverage"]["pe"] 
     threads:
         config["threads"]
     resources:
