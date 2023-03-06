@@ -13,7 +13,7 @@
         "fastp"
     ],
     "nodes": 1,
-    "threads": 20,
+    "threads": 4,
     "mem": 32,
     "pe_adapter": "path/to/PE/adapter",
     "se_adapter": "path/to/SE/adapter",
