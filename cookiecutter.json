@@ -27,8 +27,8 @@
         false
     ],
     "genome_fai": "path/to/genome/fai",
-    "bamCoverage_pe": "--extendReads",
-    "bamCoverage_se": "--extendReads 200",
+    "bamCoverage_pe": "--extendReads -bs 1 --normalizeUsing RPKM",
+    "bamCoverage_se": "--extendReads 200 -bs 1 --normalizeUsing RPKM",
     "blacklist": "path/to/blacklist",
     "transcriptome": "GTF or BED gene/transcript annotation file",
     "_copy_without_render": [
