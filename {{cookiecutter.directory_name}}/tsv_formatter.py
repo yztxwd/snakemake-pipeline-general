@@ -24,7 +24,7 @@ def main():
     # samples.tsv
     temp = meta.groupby(["Title", "Accession"]).apply(lambda chunk: [ "aspera/" + i for i in chunk["FastQ filename"]])
     samples = pd.DataFrame(temp.to_list(), index=temp.index).reset_index()
-    if samples.shape[1] == 2:
+    if samples.shape[1] == 3:
         # single end
         samples.columns = ["sample", "Accession", "fq1"]
         samples["fq2"] = None
