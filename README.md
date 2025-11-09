@@ -20,6 +20,8 @@ Workflows supported by this general pipeline:
 | [atac-seq-standard-pipeline](https://github.com/yztxwd/atac-seq-standard-pipeline) | For ATAC-seq analysis |
 | [dna-methylation-pipeline](https://github.com/yztxwd/dna-methylation-pipeline) | For BS-seq, TAB-seq, methylC-seq (Bismark seems not working during some steps due to the environment issue) |
 
+Each pipeline is integrated by [cookiecutter](https://github.com/cookiecutter/cookiecutter) for easy depolyment
+
 Change log:
 - Feb 25, 2022: Job grouping for cluster execution (Reverted due to cpu management performance issue)
 - Dec 21, 2021: Signal coverage profile around TSS integrated
